@@ -1,0 +1,70 @@
+* Arduino Pro Mini
+
+Raw: Vin
+GND: GND
+
+D0: TX
+D1: RX
+D2: SW1
+D3: Grayscale Clock (TLC5940)
+D4: SW2
+D5: SW3
+D6: ---
+D7: ---
+D8: ---
+D9: XLAT (TLC5940)
+D10: BLANK (TLC5940)
+D11: SIN (TLC5940)
+D12: ---
+D13: SCLCK (TLC5940)
+
+A0: Sensor
+A1: ---
+A2: ---
+A3: ---
+A4: I2C SDA
+A5: I2C SCL
+A6: ---
+A7: ---
+
+
+* DS1307 RTC Module
+
+SDA: I2C SDA
+SCL: I2C SCL
+SQW: ---
+GND: GND
+5V: Vin
+
+
+* 20p MIL connector (x4)
+
+1: Vcc
+2: ---
+3: Pin 1
+4: Pin 2
+...
+18: Pin 16
+19: ---
+20: ---
+
+
+* 2p Qi connector (Power)
+
+Top: GND
+Bottom: Vin
+
+
+* 3p Qi connector (Sensor)
+
+Left: Vcc
+Center: GND
+Right: Sensor signal
+
+
+* 4p Qi connector (SW)
+
+Left: GND
+Middle left: SW1
+Middle right: SW2
+Right: SW3
