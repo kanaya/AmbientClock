@@ -16,7 +16,7 @@
 #include <RTClib.h>
 #include <Time.h>
 
-#define POWAN 100
+#define POWAN 500
 #define DELAY 500
 
 #define OFF       0
@@ -31,6 +31,10 @@
 #define AFTERGLOW_BRIGHTNESS 100
 
 #define TH 120
+
+#define SW1 2
+#define SW2 4
+#define SW3 5
 
 /// Do not turn on more than 33 segments
 
@@ -82,7 +86,7 @@ const int *alphanums[] = {
 
 static RTC_DS1307 rtc;
 static int segs[64];
-static int status = SLEEP;
+static int st = SLEEP;
 
 void setup() {
   Serial.begin(57600);
@@ -102,6 +106,13 @@ void setup() {
     segs[s] = OFF;
   } 
   Tlc.update();
+  
+  pinMode(SW1, INPUT);
+  pinMode(SW2, INPUT);
+  pinMode(SW3, INPUT);
+  digitalWrite(SW1, HIGH);
+  digitalWrite(SW2, HIGH);
+  digitalWrite(SW3, HIGH);
 }
 
 void powan(int brightnesses[]) {
@@ -113,17 +124,23 @@ void powan(int brightnesses[]) {
 
 void powan_update(int segments[]) {
   int brightnesses[N_SEGS];
-  for (int b = MAX_BRIGHTNESS - 1; b >= 0; --b) {
-    for (int i = 0; i < N_SEGS; ++i) {
-      if (segs[i] == ON && segments[i] == OFF) {
-        brightnesses[i] = b;
+  
+  if (st == AWAKE) {
+    for (int b = MAX_BRIGHTNESS - 1; b >= 0; --b) {
+      for (int i = 0; i < N_SEGS; ++i) {
+        if (segs[i] == ON && segments[i] == OFF) {
+          brightnesses[i] = b;
+        }
+        else {
+          brightnesses[i] = (segs[i] == ON) ? MAX_BRIGHTNESS : 0;
+        }
       }
-      else {
-        brightnesses[i] = (segs[i] == ON) ? MAX_BRIGHTNESS : 0;
-      }
+      powan(brightnesses);
+      delayMicroseconds(POWAN);
     }
-    powan(brightnesses);
-    delayMicroseconds(POWAN);
+  }
+  else {
+    st = AWAKE;
   }
   
   for (int b = 0; b < MAX_BRIGHTNESS; ++b) {
@@ -185,7 +202,8 @@ void loop() {
     for (int i = 0; i < N_SEGS; ++i) {
       segments[i] = OFF;
     }
-    powan_update(segments); 
+    powan_update(segments);
+    st = SLEEP;
   }
   delay(DELAY);
 }
