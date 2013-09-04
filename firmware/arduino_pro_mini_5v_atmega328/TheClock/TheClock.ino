@@ -1,3 +1,15 @@
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 #include <Tlc5940.h>
 
 #include <Wire.h>
@@ -5,11 +17,14 @@
 #include <Time.h>
 
 #define POWAN 100
-#define DELAY 2000
+#define DELAY 500
 
 #define OFF       0
-#define AFTERGLOW 2
 #define ON        1
+#define AFTERGLOW 2
+
+#define SLEEP     0
+#define AWAKE     1
 
 #define N_SEGS (16 * NUM_TLCS)
 #define MAX_BRIGHTNESS (4096 / 2)
@@ -59,14 +74,15 @@ int ay[16] = {  0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0 };
 int az[16] = {  0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0 };
 */
 
-int *alphanums[] = {
+const int *alphanums[] = {
   n0, n1, n2, n3, n4, n5, n6, n7, n8, n9, 
   /* aa, ab, ac, ad, ae, af, ag, ah, ai, aj, ak, al, am, an, ao, ap, aq, ar, as, at, au, av, aw, ax, ay, az,
   ssp, sex, sdq, ssh, sdl, spc, sam, sap, sop, scp, sas, spl, scm, smn, spr, ssl, scl, ssc, slt, seq, sgt, 
   sit, sat, sob, sbs, scb, sca, sub */ };
 
-RTC_DS1307 rtc;
-int segs[64];
+static RTC_DS1307 rtc;
+static int segs[64];
+static int status = SLEEP;
 
 void setup() {
   Serial.begin(57600);
@@ -86,8 +102,6 @@ void setup() {
     segs[s] = OFF;
   } 
   Tlc.update();
-  
-  pinMode(13, OUTPUT);
 }
 
 void powan(int brightnesses[]) {
@@ -97,77 +111,38 @@ void powan(int brightnesses[]) {
   Tlc.update();
 }
 
-void powan_on(int segments[]) {
-  // OFF & HIGH --> ON
-  // AFTERGLOW & HIGH --> ON
-  // OFF & LOW --> OFF
-  // AFTERGROW & LOW --> OFF
-  
-  digitalWrite(13, HIGH);
-  
+void powan_update(int segments[]) {
   int brightnesses[N_SEGS];
-  for (int b = 0; b < MAX_BRIGHTNESS; ++b) {
+  for (int b = MAX_BRIGHTNESS - 1; b >= 0; --b) {
     for (int i = 0; i < N_SEGS; ++i) {
-      if (segments[i] == ON) {
-        if (segs[i] == AFTERGLOW) {
-          brightnesses[i] = (b > AFTERGLOW_BRIGHTNESS) ? b : AFTERGLOW_BRIGHTNESS;
-        }
-        else {
-          brightnesses[i] = b;
-        }
-      }
-      else {
-        brightnesses[i] = 0;
-      }
-    }
-    powan(brightnesses);
-    delayMicroseconds(POWAN);
-  }
-  for (int i = 0; i < N_SEGS; ++i) {
-    if (segments[i] == ON) {
-      segs[i] = ON;
-    }
-    else {
-      segs[i] = OFF;
-    }
-  }
-  
-  digitalWrite(13, LOW);
-}
-
-
-void powan_off() {
-  // ON --> AFTERGLOW
-  // AFTERGLOW --> AFTERGLOW
-  // OFF --> OFF
-  
-  digitalWrite(13, HIGH);
-  
-  int brightnesses[N_SEGS];
-  for (int b = MAX_BRIGHTNESS - 1; b > AFTERGLOW_BRIGHTNESS; --b) {
-    for (int i = 0; i < N_SEGS; ++i) {
-      if (segs[i] == ON) {
+      if (segs[i] == ON && segments[i] == OFF) {
         brightnesses[i] = b;
       }
       else {
-        brightnesses[i] = 0;
+        brightnesses[i] = (segs[i] == ON) ? MAX_BRIGHTNESS : 0;
       }
     }
     powan(brightnesses);
     delayMicroseconds(POWAN);
   }
-  for (int i = 0; i < N_SEGS; ++i) {
-    if (segs[i] == ON || segs[i] == AFTERGLOW) {
-      segs[i] = AFTERGLOW;
+  
+  for (int b = 0; b < MAX_BRIGHTNESS; ++b) {
+    for (int i = 0; i < N_SEGS; ++i) {
+      if (segs[i] == OFF && segments[i] == ON) {
+        brightnesses[i] = b;
+      }
+      else {
+        brightnesses[i] = (segs[i] == ON) && (segments[i] == ON) ? MAX_BRIGHTNESS : 0;
+      }
     }
-    else {
-      segs[i] = OFF;
-    }
+    powan(brightnesses);
+    delayMicroseconds(POWAN);
   }
   
-  digitalWrite(13, LOW);
+  for (int i = 0; i < N_SEGS; ++i) {
+    segs[i] = segments[i];
+  }
 }
-
 
 void loop() {
   DateTime now = rtc.now();
@@ -203,11 +178,14 @@ void loop() {
         segments[i * 16 + j] = alphanums[a[i]][j];
       }
     }
-    powan_on(segments);
-    delay(DELAY);
+    powan_update(segments);
   }
   else {
-    powan_off();
-    delay(DELAY);
+    int segments[N_SEGS];
+    for (int i = 0; i < N_SEGS; ++i) {
+      segments[i] = OFF;
+    }
+    powan_update(segments); 
   }
+  delay(DELAY);
 }
