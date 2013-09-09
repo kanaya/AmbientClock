@@ -16,7 +16,7 @@
 #include <RTClib.h>
 #include <Time.h>
 
-#define POWAN 500
+#define POWAN 300 /* 500 */
 #define DELAY 500
 
 #define OFF       0
@@ -27,10 +27,10 @@
 #define AWAKE     1
 
 #define N_SEGS (16 * NUM_TLCS)
-#define MAX_BRIGHTNESS (4096 / 2)
+#define MAX_BRIGHTNESS 3000 /* (4096 / 2) */
 #define AFTERGLOW_BRIGHTNESS 100
 
-#define TH 120
+#define TH 60 /* 120 */
 
 #define SW1 2
 #define SW2 4
@@ -126,7 +126,7 @@ void powan_update(int segments[]) {
   int brightnesses[N_SEGS];
   
   if (st == AWAKE) {
-    for (int b = MAX_BRIGHTNESS - 1; b >= 0; --b) {
+    for (int b = MAX_BRIGHTNESS - 1; b >= 0; b -= 2) {
       for (int i = 0; i < N_SEGS; ++i) {
         if (segs[i] == ON && segments[i] == OFF) {
           brightnesses[i] = b;
@@ -143,7 +143,7 @@ void powan_update(int segments[]) {
     st = AWAKE;
   }
   
-  for (int b = 0; b < MAX_BRIGHTNESS; ++b) {
+  for (int b = 0; b < MAX_BRIGHTNESS; b += 2) {
     for (int i = 0; i < N_SEGS; ++i) {
       if (segs[i] == OFF && segments[i] == ON) {
         brightnesses[i] = b;
