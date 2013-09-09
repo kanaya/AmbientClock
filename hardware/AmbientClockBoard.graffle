@@ -9838,8 +9838,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{240.39999415122782, 251.99999332427979}</string>
-				<string>{249.1999921329602, 251.99999332427979}</string>
+				<string>{240.39999415129515, 251.99999332427979}</string>
+				<string>{249.19999213362001, 251.99999332427979}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -9875,8 +9875,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{240.39999415122782, 244.79999351501465}</string>
-				<string>{249.1999921329602, 244.79999351501465}</string>
+				<string>{240.39999415129515, 244.79999351501465}</string>
+				<string>{249.19999213362001, 244.79999351501465}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -14421,8 +14421,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{179.99999513067257, 162.79999661534484}</string>
-				<string>{179.99999513067257, 125.20000140122107}</string>
+				<string>{179.99999513067257, 162.79999661534529}</string>
+				<string>{179.99999513067257, 125.20000140123861}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -14456,8 +14456,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{179.99999138386005, 198.7999927973988}</string>
-				<string>{179.99999138386005, 168.39999835362732}</string>
+				<string>{179.99999138386005, 198.79999279737109}</string>
+				<string>{179.99999138386005, 168.39999835275682}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -14491,8 +14491,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{179.99999006298742, 234.79999661206693}</string>
-				<string>{179.99999006298742, 204.39999453802469}</string>
+				<string>{179.99999006298742, 234.79999661206804}</string>
+				<string>{179.99999006298742, 204.39999453805919}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -14526,8 +14526,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{179.99999728933528, 270.79999279740957}</string>
-				<string>{179.99999728933528, 240.3999983536257}</string>
+				<string>{179.99999728933528, 270.79999279738183}</string>
+				<string>{179.99999728933528, 240.39999835275518}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -14848,8 +14848,8 @@
 			<integer>6</integer>
 			<key>Points</key>
 			<array>
-				<string>{172.79999927079709, 125.1999976278522}</string>
-				<string>{172.79999927079709, 155.59999588715931}</string>
+				<string>{172.79999927079709, 125.19999762785224}</string>
+				<string>{172.79999927079709, 155.59999588716073}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -56337,7 +56337,7 @@
 			<key>Print</key>
 			<string>YES</string>
 			<key>View</key>
-			<string>NO</string>
+			<string>YES</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
@@ -56347,7 +56347,7 @@
 			<key>Print</key>
 			<string>YES</string>
 			<key>View</key>
-			<string>NO</string>
+			<string>YES</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
@@ -56357,7 +56357,7 @@
 			<key>Print</key>
 			<string>YES</string>
 			<key>View</key>
-			<string>NO</string>
+			<string>YES</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
@@ -56377,7 +56377,7 @@
 			<key>Print</key>
 			<string>YES</string>
 			<key>View</key>
-			<string>NO</string>
+			<string>YES</string>
 		</dict>
 		<dict>
 			<key>Lock</key>
@@ -56422,7 +56422,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2013-09-04 04:24:20 +0000</string>
+	<string>2013-09-06 05:43:20 +0000</string>
 	<key>Modifier</key>
 	<string>Ichi Kanaya</string>
 	<key>NotesVisible</key>
@@ -56503,7 +56503,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{100, 150}, {1324, 978}}</string>
+		<string>{{67, 4}, {1324, 874}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -56517,7 +56517,7 @@
 		<key>SidebarWidth</key>
 		<integer>140</integer>
 		<key>VisibleRegion</key>
-		<string>{{-4, 18.5}, {584.5, 419.5}}</string>
+		<string>{{-4, 18.5}, {584.5, 367.5}}</string>
 		<key>Zoom</key>
 		<real>2</real>
 		<key>ZoomValues</key>
