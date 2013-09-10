@@ -30,7 +30,7 @@
 #define MAX_BRIGHTNESS 3000 /* (4096 / 2) */
 #define AFTERGLOW_BRIGHTNESS 100
 
-#define TH 60 /* 120 */
+#define TH 100 /* 120 */
 
 #define SW1 2
 #define SW2 4
